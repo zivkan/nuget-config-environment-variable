@@ -19,6 +19,9 @@ jobs:
     pool:
       vmImage: $(vmImage)
 
+    variables:
+    - group: PrivateNugetFeedVariables
+
     steps:
     - task: DotNetCoreCLI@2
       displayName: Restore
