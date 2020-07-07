@@ -31,6 +31,9 @@ jobs:
 
     - script: dotnet restore -v:d -bl
       displayName: Restore
+      env:
+        NuGetFeedUserName: $(NuGetFeedUserName)
+        NuGetFeedPAT: $(NuGetFeedPAT)
 
     - task: DotNetCoreCLI@2
       displayName: Build
