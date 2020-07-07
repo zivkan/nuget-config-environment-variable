@@ -21,12 +21,17 @@ jobs:
 
     steps:
     - task: DotNetCoreCLI@2
+      displayName: Restore
+      env:
+        NuGetFeedUserName: $(NuGetFeedUserName)
+        NuGetFeedPAT: $(NuGetFeedPAT)
       inputs:
         command: 'restore'
         feedsToUse: 'config'
         nugetConfigPath: 'nuget.config'
 
     - task: DotNetCoreCLI@2
+      displayName: Build
       inputs:
         command: 'build'
         arguments: '--no-restore'
