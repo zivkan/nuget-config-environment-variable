@@ -26,7 +26,10 @@ jobs:
     - script: echo $(testVariable)
       displayName: Test variables are working
 
-    - script: dotnet restore -v:d
+    - script: echo $(NuGetFeedUserName)
+      displayName: Test secret variables are working
+
+      - script: dotnet restore -v:d -bl
       displayName: Restore
 
     - task: DotNetCoreCLI@2
