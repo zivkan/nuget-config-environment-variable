@@ -26,12 +26,8 @@ jobs:
     - script: echo $(testVariable)
       displayName: Test variables are working
 
-    - task: DotNetCoreCLI@2
+    - script: dotnet restore -v:d
       displayName: Restore
-      inputs:
-        command: 'restore'
-        feedsToUse: 'config'
-        nugetConfigPath: 'nuget.config'
 
     - task: DotNetCoreCLI@2
       displayName: Build
