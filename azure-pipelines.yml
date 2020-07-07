@@ -1,0 +1,32 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+jobs:
+  - job: Build
+    strategy:
+     matrix:
+      Windows:
+        vmImage: windows-latest
+      Linux:
+        vmImage: ubuntu-latest
+      Mac:
+        vmImage: macos-latest
+    pool:
+      vmImage: ${{vmImage}}
+
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        feedsToUse: 'config'
+        nugetConfigPath: 'nuget.config'
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        arguments: '--no-restore'
