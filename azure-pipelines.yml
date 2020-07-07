@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
@@ -23,14 +18,12 @@ jobs:
     - group: PrivateNugetFeedVariables
 
     steps:
-    - script: echo $(testVariable)
-      displayName: Test variables are working
-
-    - script: echo $(NuGetFeedUserName)
-      displayName: Test secret variables are working
-
-    - script: dotnet restore -v:d -bl
+    - task: DotNetCoreCLI@2
       displayName: Restore
+      inputs:
+        command: 'restore'
+        feedsToUse: 'config'
+        nugetConfigPath: 'nuget.config'
       env:
         NuGetFeedUserName: $(NuGetFeedUserName)
         NuGetFeedPAT: $(NuGetFeedPAT)
