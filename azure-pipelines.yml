@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
@@ -19,14 +14,18 @@ jobs:
     pool:
       vmImage: $(vmImage)
 
+    variables:
+    - group: PrivateNugetFeedVariables
+
     steps:
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'restore'
-        feedsToUse: 'config'
-        nugetConfigPath: 'nuget.config'
+    - script: dotnet restore -v:d
+      displayName: Restore
+      env:
+        NuGetFeedUserName: $(NuGetFeedUserName)
+        NuGetFeedPAT: $(NuGetFeedPAT)
 
     - task: DotNetCoreCLI@2
+      displayName: Build
       inputs:
         command: 'build'
         arguments: '--no-restore'
